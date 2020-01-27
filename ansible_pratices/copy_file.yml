@@ -1,0 +1,11 @@
+---
+- name: Copy the file
+  hosts: all
+  become: true
+  tasks:
+  - name: copy file 
+    copy:
+      src: /home/ansadmin/ansible_pratices/index.html
+      dest: /home/ansadmin
+      mode: 0600
+      owner: shishir

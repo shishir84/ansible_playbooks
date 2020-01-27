@@ -1,0 +1,6 @@
+---
+- name: Install httpd package
+  hosts: all
+  become: true
+  roles:
+    - name: setup-apache

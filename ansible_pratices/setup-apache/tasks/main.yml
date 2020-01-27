@@ -1,0 +1,40 @@
+---
+- 
+  name: "Install httpd"
+  notify: "start httpd"
+  when: "ansible_os_family == \"RedHat\""
+  yum: 
+    name: httpd
+    state: installed
+- 
+  lineinfile: 
+    insertafter: "^#Listen "
+    line: "Listen {{port}}"
+    path: /etc/httpd/conf/httpd.conf
+    regexp: "^Listen "
+  name: "Ensure the default httpd port is {{port}}"
+  notify: "restart httpd"
+  when: "ansible_os_family == \"RedHat\""
+- 
+  apt: 
+    name: apache2
+    state: present
+  name: "Install apache2"
+  notify: "start apache2"
+  when: "ansible_os_family == \"Debian\""
+- 
+  copy: 
+    dest: /var/www/html
+    mode: 438
+    src: /opt/ansible/index.html
+  name: "copy file"
+- 
+  lineinfile: 
+    insertafter: "^#Listen "
+    line: "Listen {{port}}"
+    path: /etc/apache2/ports.conf
+    regexp: "^Listen "
+  name: "Ensure the default Apache2 port is {{port}}"
+  notify: "restart apache2"
+  when: "ansible_os_family == \"Debian\""
+

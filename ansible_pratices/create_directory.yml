@@ -1,0 +1,9 @@
+---
+- name: Create directory
+  hosts: all
+  #become: false
+  tasks:
+  - name: Create directory 
+    file:
+      path: /home/ansadmin/demodirectory
+      state: directory
